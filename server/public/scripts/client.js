@@ -5,12 +5,37 @@ let round = 0;
 function handleReady() {
   console.log("jquery is loaded!")
 
+  // getSecretNumber();
+
   $('#submitBtn').on('click', handleSubmit);
 
   getGuesses();
 }
 
-//get ajax
+//get ajax secret number 
+// function getSecretNumber() { //getting randomly generated number from SERVER
+//   console.log('Getting secret Number for ya');
+
+//   $.ajax({
+//     url: '/secret-number',
+//    method: 'GET'
+//   }).then(function(response){
+//     console.log(response);
+//     //We don't need secret number in client side.
+//   }).catch(function(error){
+//     console.log(error);
+//     alert('error in get!')
+//   })
+//   console.log('end of get function...');
+// }
+
+function evaluateCheck(guesses) {
+  if(guesses.lucasGuess === true) {
+
+  }
+}
+
+//get ajax guesses 
 function getGuesses(){
   console.log('getting guesses...');
   
@@ -27,7 +52,7 @@ function getGuesses(){
   console.log('end of get function...');
 }
 
-// POST ajax
+// POST ajax guess 
 function handleSubmit (){
   console.log('clicked in handleSubmit');
   let lucasGuess = $('#lucasGuess').val();
@@ -52,6 +77,21 @@ function handleSubmit (){
   }).catch(function(error){
     console.log(error);
   })
+
+  // $.ajax({
+  //   url: '/secret-number',
+  //  method: 'POST',
+  //  data: {
+  //    lucasGuess: false,
+  //    julietteGuess: false,
+  //    anissaGuess: false
+  //  }
+  // }).then(function(response) {
+  //   console.log('response');
+  //   evaluateCheck(response);
+  // }).catch(function(error){
+  //   console.log(error);
+  // })
 }
 
 function render(guesses){
