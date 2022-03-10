@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('server/public'));
 
 const guesses = [];
+let counter = 0;
 
 // GET & POST Routes go here
 
@@ -20,6 +21,7 @@ app.get('/guess', (req, res) => {
   res.send(guesses);
 })
 
+//post
 app.post('/guess', (req, res) => {
   console.log('POST /guesses', req.body);
 

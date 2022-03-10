@@ -1,5 +1,7 @@
 $(document).ready(handleReady);
 
+let round = 0;
+
 function handleReady() {
   console.log("jquery is loaded!")
 
@@ -31,11 +33,14 @@ function handleSubmit (){
   let lucasGuess = $('#lucasGuess').val();
   let julietteGuess = $('#julietteGuess').val();
   let anissaGuess = $('#anissaGuess').val();
+  // let round = 0;
+  round++;
   
   $.ajax({
     url: '/guess',
    method: 'POST',
    data: {
+     round: round,
      lucasGuess: lucasGuess,
      julietteGuess: julietteGuess,
      anissaGuess: anissaGuess
@@ -50,7 +55,9 @@ function handleSubmit (){
 }
 
 function render(guesses){
+  $('#guess').text('');
+
   for (const guess of guesses){
-    $('#guess').append(`<p>${guess.lucasGuess} ${guess.julietteGuess} ${guess.anissaGuess}</p>`)
+    $('#guess').append(`<p>ROUND ${guess.round}: ${guess.anissaGuess} ${guess.julietteGuess} ${guess.lucasGuess}</p>`)
   }
 }
