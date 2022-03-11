@@ -31,7 +31,6 @@ function handleReady() {
 
 function evaluateCheck(guesses) {
   if(guesses.lucasGuess === true) {
-
   }
 }
 

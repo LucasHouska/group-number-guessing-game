@@ -11,9 +11,10 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static('server/public'));
 
 //variables
-const guesses = {};
+const guesses = [];
+const guessResults = [];
 let counter = 0;
-let secretNumber = 0;
+let randomNumber = 0;
 
 //random number generator
 function randomNumberGenerator() {
@@ -21,21 +22,65 @@ function randomNumberGenerator() {
   console.log(secretNumber)
 };
 
+//call random number generator 
+randomNumberGenerator();
+
+//results object
+  let lucasResult = '';
+  let anissaResult = '';
+  let julietteResult = '';
+
+let resultObject = {
+  Lucas: lucasResult,
+  Juliette: julietteResult,
+  Anissa: anissaResult
+}
+
+// function convertToNumber(input) {
+  
+// }
 //comparison between secret number and  guess
 function checkSecretNumber(secretNumber) {
-  if(secretNumber === secretNumber.anissaGuess) {
+
+
+  // let lucasResult = '';
+  // let anissaResult = '';
+  // let julietteResult = '';
+
+  if(randomNumber === secretNumber.anissaGuess) {
     console.log('Congrats, Anissa!');
-    secretNumber.anissaGuess = true;
-  } else if(secretNumber === secretNumber.julietteGuess) {
-    console.log('Congrats, Juliette!');
-    secretNumber.julietteGuess = true;
-  } else if(secretNumber === secretNumber.lucasGuess) {
+    anissaResult = 'WINNER';
+  } else if(randomNumber > secretNumber.anissaGuess) {
+    console.log('Too low, Anissa');
+    anissaResult = 'Too Low';
+  } else if(randomNumber < secretNumber.anissaGuess) {
+    console.log('Too High, Anissa');
+    anissaResult = 'Too High, Anissa';
+  } 
+  
+  if (randomNumber === secretNumber.julietteGuess) {
+    julietteResult = 'Congrats, Juliette!';
+  }
+    else if(randomNumber < secretNumber.julietteGuess) {
+      julietteResult = 'Too high';
+    }
+    else if(randomNumber > secretNumber.julietteGuess) {
+      julietteResult = 'Too low';
+    }
+   
+  if(randomNumber === secretNumber.lucasGuess) {
     console.log('Congrats, Lucas');
-    secretNumber.lucasGuess === true;
-  } else {
-    console.log('Keep guessing...')
+    lucasResult = 'Lucas, you WIN!!!';
+  } else if(randomNumber > secretNumber.lucasGuess) {
+    console.log('Too low, Lucas')
+    lucasResult = 'too low'
+  } else if(randomNumber < secretNumber.lucasGuess) {
+    console.log('Too high, Lucas')
+    lucasResult = 'too high'
   }
 };
+
+
 
 // GET & POST Routes go here
 
@@ -46,10 +91,10 @@ app.get('/guess', (req, res) => {
 });
 
 //get secret number
-app.get('/secret-number', (req, res) => {
-  console.log('GET /secret-number');
-  res.send(randomNumberGenerator());
-});
+// app.get('/secret-number', (req, res) => {
+//   console.log('GET /secret-number');
+//   res.send(randomNumberGenerator());
+// });
 
 //post guess
 app.post('/guess', (req, res) => {
@@ -59,14 +104,14 @@ app.post('/guess', (req, res) => {
 
   res.sendStatus(201);
   console.log(guesses);
-  res.send(checkSecretNumber(req.body));
+  checkSecretNumber(req.body);
 });
 
 //post secret number
-app.post('/secret-number', (req, res) =>{
-  console.log('POST /secret-number');
-  // checkSecretNumber(req.body);
-});
+// app.post('/secret-number', (req, res) =>{
+//   console.log('POST /secret-number');
+//   // checkSecretNumber(req.body);
+// });
 
 //starts the server 
 app.listen(PORT, () => {
